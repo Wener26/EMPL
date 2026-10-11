@@ -2,6 +2,8 @@
 
 PyTorch implementation of **Embedding-driven Meta-Parameter Learning (EMPL)** for motor-imagery EEG decoding.
 
+![Overview of EMPL](fig/fig2.png)
+
 ## Structure
 
 ```
@@ -12,6 +14,18 @@ empl/
   spatial.py      meta-spatial encoder (adaptive adjacency from E_s, node-specific Meta-GCRU)
   model.py        EMPL
 ```
+
+## Sample-wise hybrid temporal embedding
+
+![Hybrid temporal embedding](fig/fig3.png)
+
+## Meta-temporal and meta-spatial encoders
+
+![Meta-temporal and meta-spatial encoders](fig/fig4.png)
+
+## Group-based diversity
+
+![Group-based diversity](fig/fig5.png)
 
 ## Requirements
 
