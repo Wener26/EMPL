@@ -19,21 +19,6 @@ empl/
 pip install -r requirements.txt
 ```
 
-## Usage
-
-```python
-import torch
-from empl import EMPL
-
-model = EMPL(in_channels=22, seq_len=1125, n_classes=4)
-x = torch.randn(64, 22, 1125)
-y = torch.randint(0, 4, (64,))
-logits = model(x)
-loss = torch.nn.functional.cross_entropy(logits, y) + 0.2 * model.group_diversity_loss()
-```
-
-The input is a batch of EEG trials of shape (batch, channels, time), standardized per channel and time sample with training-set statistics.
-
 ## Default settings
 
 d_t = d_s = 64, N_g = 8, tau = 1, J = 2, alpha = 0.3, M = 5 sliding windows of length 16 with stride 1;
