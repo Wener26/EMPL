@@ -11,8 +11,6 @@ empl/
   temporal.py     meta-temporal encoder (MHSA + embedding-driven meta-causal convolution, sliding windows)
   spatial.py      meta-spatial encoder (adaptive adjacency from E_s, node-specific Meta-GCRU)
   model.py        EMPL
-data.py           BCI Competition IV-2a loading via MOABB, 1.5-6.0 s window, z-scoring with training-set statistics
-train.py          within-subject and leave-one-subject-out (LOSO) training and evaluation
 ```
 
 ## Requirements
@@ -21,25 +19,22 @@ train.py          within-subject and leave-one-subject-out (LOSO) training and e
 pip install -r requirements.txt
 ```
 
-Python 3.10+, PyTorch 2.x, MNE, MOABB, scikit-learn. The BCI-IV-2a data are downloaded by MOABB on first use.
-
 ## Usage
 
-Within-subject (session 1 for training, session 2 for testing, 1000 epochs, five runs per subject):
+```python
+import torch
+from empl import EMPL
 
-```
-python train.py --protocol within --subjects 1 2 3 4 5 6 7 8 9
-```
-
-Leave-one-subject-out (eight source subjects for training and validation, target subject for testing, 125 epochs):
-
-```
-python train.py --protocol loso --subjects 1 2 3 4 5 6 7 8 9
+model = EMPL(in_channels=22, seq_len=1125, n_classes=4)
+x = torch.randn(64, 22, 1125)
+y = torch.randint(0, 4, (64,))
+logits = model(x)
+loss = torch.nn.functional.cross_entropy(logits, y) + 0.2 * model.group_diversity_loss()
 ```
 
-Results are written to `results/<protocol>.json` (accuracy and Cohen's kappa per run and their means).
+The input is a batch of EEG trials of shape (batch, channels, time), standardized per channel and time sample with training-set statistics.
 
 ## Default settings
 
-Adam, learning rate 9e-4, batch size 64, loss = cross-entropy + 0.2 * group orthogonality loss;
-d_t = d_s = 64, N_g = 8, tau = 1, J = 2, alpha = 0.3, M = 5 sliding windows of length 16 with stride 1.
+d_t = d_s = 64, N_g = 8, tau = 1, J = 2, alpha = 0.3, M = 5 sliding windows of length 16 with stride 1;
+Adam, learning rate 9e-4, batch size 64, loss = cross-entropy + 0.2 * group orthogonality loss.
