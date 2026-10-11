@@ -15,17 +15,11 @@ empl/
   model.py        EMPL
 ```
 
-## Sample-wise hybrid temporal embedding
+## Results
 
-![Hybrid temporal embedding](fig/fig3.png)
+Within-subject classification on BCI Competition IV-2a (four classes) and IV-2b (two classes).
 
-## Meta-temporal and meta-spatial encoders
-
-![Meta-temporal and meta-spatial encoders](fig/fig4.png)
-
-## Group-based diversity
-
-![Group-based diversity](fig/fig5.png)
+![Results on BCI-IV-2a and BCI-IV-2b](fig/table1.png)
 
 ## Requirements
 
